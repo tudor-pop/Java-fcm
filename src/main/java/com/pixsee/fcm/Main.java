@@ -6,7 +6,10 @@ package com.pixsee.fcm;
 public class Main {
     public static void main(String[] args) {
         Sender sender = new Sender("AIzaSyCl1eei6fHUYXl1xetFGkNSOKYNsXv8PUU");
-        sender.send("fYgYpYs1fDQ:APA91bEP4m18lwRkNbbmpGIthgpyAQ_6QU1Et7kygcbS8y2IrPKzj1jw7jE_Vkk5yfc2vtFzKDWRsek53kTasou3FliOFO2ywhkk9UrsJnIjfGtl-iqRUU6tNYINsKEik2UM-YiX5oNY");
+
+        Message message = new Message.MessageBuilder()
+                .setTo("fYgYpYs1fDQ:APA91bEP4m18lwRkNbbmpGIthgpyAQ_6QU1Et7kygcbS8y2IrPKzj1jw7jE_Vkk5yfc2vtFzKDWRsek53kTasou3FliOFO2ywhkk9UrsJnIjfGtl-iqRUU6tNYINsKEik2UM-YiX5oNY").createMessage();
+        sender.send(message);
         return;
     }
 }

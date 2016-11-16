@@ -6,6 +6,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Converter.Factory;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -51,32 +52,18 @@ public class Sender {
         };
     }
 
-    public void send(String to) {
+    public void send(Message message) {
+        send(message, null);
+    }
+
+    public void send(Message message, Callback callback) {
         retrofit.create(GoogleCSS.class)
-                .send(new Message(to))
-                .enqueue(new retrofit2.Callback<JsonObject>() {
-                    public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
-                        System.out.println(response.body());
-
-                    }
-
-                    public void onFailure(Call<JsonObject> call, Throwable t) {
-                        t.printStackTrace();
-
-                    }
-                });
+                .send(message)
+                .enqueue(callback);
     }
 
     private interface GoogleCSS {
         @POST("send")
         Call<JsonObject> send(@Body Message to);
-    }
-
-    class Message {
-        String to;
-
-        public Message(String to) {
-            this.to = to;
-        }
     }
 }
