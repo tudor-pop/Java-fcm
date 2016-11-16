@@ -21,4 +21,100 @@ public class Notification {
     private List<String> title_loc_args;
     private String body_loc_key;
     private List<String> body_loc_args;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getSound() {
+        return sound;
+    }
+
+    public void setSound(String sound) {
+        this.sound = sound;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getBadge() {
+        return badge;
+    }
+
+    public void setBadge(String badge) {
+        this.badge = badge;
+    }
+
+    public String getClickAction() {
+        return click_action;
+    }
+
+    public void setClickAction(String click_action) {
+        this.click_action = click_action;
+    }
+
+    public String getTitleLocKey() {
+        return title_loc_key;
+    }
+
+    public void setTitleLocKey(String title_loc_key) {
+        this.title_loc_key = title_loc_key;
+    }
+
+    public List<String> getTitleLocArgs() {
+        return title_loc_args;
+    }
+
+    public void setTitleLocArgs(List<String> title_loc_args) {
+        this.title_loc_args = title_loc_args;
+    }
+
+    public String getBodyLocKey() {
+        return body_loc_key;
+    }
+
+    public void setBodyLocKey(String body_loc_key) {
+        this.body_loc_key = body_loc_key;
+    }
+
+    public List<String> getBodyLockArgs() {
+        return body_loc_args;
+    }
+
+    public void setBodyLockArgs(List<String> body_loc_args) {
+        this.body_loc_args = body_loc_args;
+    }
 }
