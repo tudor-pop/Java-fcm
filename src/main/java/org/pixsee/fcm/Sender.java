@@ -1,4 +1,4 @@
-package com.pixsee.fcm;
+package org.pixsee.fcm;
 
 import com.google.gson.JsonObject;
 import com.sun.deploy.net.HttpRequest;

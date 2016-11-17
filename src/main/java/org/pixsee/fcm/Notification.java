@@ -1,4 +1,4 @@
-package com.pixsee.fcm;
+package org.pixsee.fcm;
 
 import java.util.List;
 
