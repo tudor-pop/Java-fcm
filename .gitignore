@@ -76,3 +76,4 @@ gradle-app.setting
 .idea/
 src/main/resources/
 src/test/resources/
+/gradle.properties

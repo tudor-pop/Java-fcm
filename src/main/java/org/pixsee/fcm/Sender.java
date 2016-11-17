@@ -1,8 +1,6 @@
 package org.pixsee.fcm;
 
 import com.google.gson.JsonObject;
-import com.sun.deploy.net.HttpRequest;
-import com.sun.istack.internal.NotNull;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -48,7 +46,7 @@ public class Sender {
                 .addConverterFactory(factory);
     }
 
-    public void setLoggingLevel(@NotNull HttpLoggingInterceptor.Level level) {
+    public void setLoggingLevel(HttpLoggingInterceptor.Level level) {
         httpLoggingInterceptor.setLevel(level);
     }
 
@@ -56,7 +54,7 @@ public class Sender {
         return chain -> {
             Request request = chain.request().newBuilder()
                     .header("Authorization", String.format("key=%s", Sender.this.serverKey))
-                    .header(HttpRequest.CONTENT_TYPE, "application/json")
+                    .header("content-type", "application/json")
                     .build();
             return chain.proceed(request);
         };
