@@ -3,6 +3,10 @@ buildscript {
         jcenter()
     }
 }
+repositories {
+    mavenCentral()
+    jcenter()
+}
 plugins {
     id "com.jfrog.bintray" version "1.7"
 }
@@ -12,79 +16,12 @@ def GROUP_ID = 'org.pixsee.java-fcm'
 group GROUP_ID
 version VERSION
 
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'java'
 
-allprojects {
-    repositories {
-        jcenter()
-    }
-    apply plugin: 'maven'
-    apply plugin: 'maven-publish'
-    apply plugin: 'java'
-}
-
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    configurations = ['archives']
-    pkg {
-        repo = 'Pixsee'
-        name = GROUP_ID
-        userOrg = 'tudor'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/PopTudor/Java-fcm'
-        version {
-            name = VERSION
-            desc = 'Gradle Bintray Plugin 1.0 final'
-            released  = new Date()
-            vcsTag = '1.0'
-            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
-        }
-    }
-}
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            name 'Java-fcm'
-            description 'A java based wrapper library for FCM'
-            url 'https://github.com/PopTudor/Java-fcm'
-            inceptionYear '2016'
-
-            packaging 'jar'
-            groupId 'org.pixsee.java-fcm'
-            artifactId 'Java-fcm'
-            version VERSION
-
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
-            }
-            scm {
-                connection 'https://github.com/PopTudor/Java-fcm.git'
-                url 'https://github.com/PopTudor/Java-fcm'
-            }
-            developers {
-                developer {
-                    name 'Pixsee'
-                }
-            }
-        }
-    }
-}
 sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
-}
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}
 dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -94,4 +31,51 @@ dependencies {
     compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.4.2'
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    configurations = ['archives']
+    publications = ['pixseeMaven']
+    pkg {
+        repo = 'Pixsee'
+        name = GROUP_ID
+        userOrg = 'tudor'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/PopTudor/Java-fcm'
+        version {
+            name = VERSION
+            desc = 'Gradle Bintray Plugin 1.0 final'
+            released = new Date()
+            vcsTag = '1.0'
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+publishing {
+    publications {
+        pixseeMaven(MavenPublication) {
+            from components.java
+            groupId GROUP_ID
+            artifactId "java-fcm"
+            version VERSION
+        }
+    }
 }
