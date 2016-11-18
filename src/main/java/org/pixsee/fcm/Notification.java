@@ -22,6 +22,20 @@ public class Notification {
     private String body_loc_key;
     private List<String> body_loc_args;
 
+    public Notification() {
+    }
+
+    public Notification(String title, String body) {
+
+        this.title = title;
+        this.body = body;
+    }
+
+    public Notification(String title) {
+
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }

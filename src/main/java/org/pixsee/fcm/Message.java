@@ -1,6 +1,8 @@
 package org.pixsee.fcm;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,13 +11,16 @@ import java.util.Map;
  */
 public class Message {
     private String to;
+    private String condition; // field to must be null if condition is set
+
     private String collapse_key;
     private String priority;
-    private boolean content_available;
-    private long time_to_live;
+    private Boolean content_available;
+    private Long time_to_live;
     private String restricted_package_name;
-    private boolean dry_run;
-    private Map<String, Object> data = new HashMap<>();
+    private Boolean dry_run;
+    private Map<String, Object> data;
+    private List<String> registration_ids;
     private Notification notification;
 
     private Message(MessageBuilder builder) {
@@ -28,6 +33,8 @@ public class Message {
         this.dry_run = builder.dry_run;
         this.data = builder.data;
         this.notification = builder.notification;
+        this.condition = builder.condition;
+        this.registration_ids = builder.registration_ids;
     }
 
 
@@ -35,33 +42,73 @@ public class Message {
         public static final String NORMAL = "normal";
         public static final String HIGH = "high";
 
-        public static boolean isValid(String priority) {
+        private static boolean isValid(String priority) {
             return priority.equalsIgnoreCase(NORMAL) || priority.equalsIgnoreCase(HIGH);
         }
     }
 
     public static class MessageBuilder {
         private String to;
+        private String condition; // field to must be null if condition is set
+
         private String collapse_key;
         private String priority;
-        private boolean content_available;
-        private long time_to_live;
+        private Long time_to_live;
         private String restricted_package_name;
-        private boolean dry_run;
-        private Map<String, Object> data;
+        private Boolean content_available;
+        private Boolean dry_run;
+        private Map<String, Object> data = new HashMap<>(2);
+        private List<String> registration_ids = new ArrayList<>(2);
         private Notification notification;
 
-        public MessageBuilder setTo(String to) {
-            this.to = to;
+        /**
+         * Send message to single topic
+         * NOTE: A message can have a topic or a registration toToken
+         *
+         * @param topic the devices that are subscribed to a topic and will receive the message
+         * @return the message
+         */
+        public MessageBuilder toTopic(String topic) {
+            this.to = topic;
             return this;
         }
 
-        public MessageBuilder setCollapse_key(String collapse_key) {
+        /**
+         * Send message to single device
+         * NOTE: A message can have a topic or a registration toToken
+         *
+         * @param toToken the device's toToken that will receive the message
+         * @return the message
+         */
+        public MessageBuilder toToken(String toToken) {
+            this.to = toToken;
+            return this;
+        }
+
+        public MessageBuilder toCondition(String condition) {
+            this.condition = condition;
+            this.to = null;
+            return this;
+        }
+
+        public MessageBuilder addRegistrationToken(List<String> registrationTokens) {
+            this.registration_ids.addAll(registrationTokens);
+            this.to = null;
+            return this;
+        }
+
+        public MessageBuilder addRegistrationToken(String registrationToken) {
+            this.registration_ids.add(registrationToken);
+            this.to = null;
+            return this;
+        }
+
+        public MessageBuilder collapseKey(String collapse_key) {
             this.collapse_key = collapse_key;
             return this;
         }
 
-        public MessageBuilder setPriority(String priority) {
+        public MessageBuilder priority(String priority) {
             if (Priority.isValid(priority))
                 this.priority = priority;
             else
@@ -69,42 +116,59 @@ public class Message {
             return this;
         }
 
-        public MessageBuilder setContentAvailable(boolean content_available) {
+        public MessageBuilder contentAvailable(boolean content_available) {
             this.content_available = content_available;
             return this;
         }
 
-        public MessageBuilder setTimeToLive(long time_to_live) {
+        public MessageBuilder timeToLive(long time_to_live) {
             this.time_to_live = time_to_live;
             return this;
         }
 
-        public MessageBuilder setRestrictedPackageName(String restricted_package_name) {
-            this.restricted_package_name = restricted_package_name;
+        public MessageBuilder restrictedPackageName(String restrictedPackageName) {
+            this.restricted_package_name = restrictedPackageName;
             return this;
         }
 
-        public MessageBuilder setDryRun(boolean dry_run) {
-            this.dry_run = dry_run;
+        public MessageBuilder dryRun(boolean dryRun) {
+            this.dry_run = dryRun;
             return this;
         }
 
-        public MessageBuilder setData(Map<String, Object> data) {
-            this.data = data;
+        public MessageBuilder addData(Map<String, Object> data) {
+            this.data.putAll(data);
             return this;
         }
-        public MessageBuilder addData(String key,Object value){
+
+        public MessageBuilder addData(String key, Object value) {
             this.data.put(key, value);
             return this;
         }
 
-        public MessageBuilder setNotification(Notification notification) {
+        public MessageBuilder notification(Notification notification) {
             this.notification = notification;
             return this;
         }
 
-        public Message createMessage() {
+        public Message build() {
+            removeEmptyCollections();
             return new Message(this);
+        }
+
+        /**
+         * This is needed because else the json will look like this
+         * {
+         * to:"sometoken",
+         * data:{},
+         * registration_ids:[]
+         * }
+         */
+        private void removeEmptyCollections() {
+            if (this.data != null && this.data.isEmpty())
+                this.data = null;
+            if (this.registration_ids != null && this.registration_ids.isEmpty())
+                this.registration_ids = null;
         }
     }
 }
