@@ -90,10 +90,10 @@ sender.send(message, new Callback() {
 ## Notification
 ```java
 Notification notification = new Notification("title", "body");
-        notification.setIcon("icon");
-        notification.setSound("sound");
-        notification.setBadge("badge");
-        notification.setClickAction("click.action");
+notification.setIcon("icon");
+notification.setSound("sound");
+notification.setBadge("badge");
+notification.setClickAction("click.action");
 Message message = messageBuilder.notification(notification).build(); // add notification
 ```
 
@@ -110,8 +110,9 @@ sender.setLoggingLevel(HttpLoggingInterceptor.Level.HEADERS);
 ```
 ## Recipients
 You can send a message to different types of targets. All the methods apply to a MessageBuilder object
+
 | Key               | Type          | Description                                          | Method              |
-| ----------------- |:-------------:|:----------------------------------------------------:|--------------------:|
+| ----------------- |:-------------:|:----------------------------------------------------:|:--------------------|
 | to                | String        | A single [registration token] or [topic].            | toToken             |
 | topic             | String        | A single publish/subscribe [topic].                  | toTopic             |
 | condition         | String        | Multiple topics using a [condition].                 | toCondition         |
@@ -119,6 +120,10 @@ You can send a message to different types of targets. All the methods apply to a
 
 If you don't provide any of the above, you get a bad request inside onResponse callback
 
+## Support
+[Bitcoin](https://blockchain.info/address/1M6gwLMGvGJYVAMhqNZgvgN7ovGJ3EJ3GW)
+[Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MUMUF9YPD7S8S)
+[Patreon](https://www.patreon.com/user?u=4450469)
 [registration token]:https://firebase.google.com/docs/cloud-messaging/android/client#sample-register
 [topic]:https://firebase.google.com/docs/cloud-messaging/android/topic-messaging
 [condition]:https://firebase.google.com/docs/cloud-messaging/android/topic-messaging#build_send_requests
