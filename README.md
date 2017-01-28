@@ -4,6 +4,8 @@ I hope people will get interested into this project and I appreciate all the val
 
 If you are just getting started with FCM you should start reading the [official docs.](https://firebase.google.com/docs/cloud-messaging/)
 
+This library was inspired by the nodejs version https://github.com/ToothlessGear/node-gcm
+
 ## Installation
 ### Gradle
 Add the following to your build.gradle file
