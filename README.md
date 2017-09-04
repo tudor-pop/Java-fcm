@@ -123,9 +123,6 @@ You can send a message to different types of targets. All the methods apply to a
 If you don't provide any of the above, you get a bad request inside onResponse callback
 
 ## Support
-[Bitcoin](https://blockchain.info/address/1M6gwLMGvGJYVAMhqNZgvgN7ovGJ3EJ3GW)
-[Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MUMUF9YPD7S8S)
-[Patreon](https://www.patreon.com/user?u=4450469)
-[registration token]:https://firebase.google.com/docs/cloud-messaging/android/client#sample-register
-[topic]:https://firebase.google.com/docs/cloud-messaging/android/topic-messaging
-[condition]:https://firebase.google.com/docs/cloud-messaging/android/topic-messaging#build_send_requests
+[![BTC](https://www.cryptocompare.com/media/19633/btc.png?anchor=center&mode=crop&width=32&height=32)](1J6ChGjT7fhigtf8w4kddgsHNsiYFZd8wu)
+[![ETH](https://files.coinmarketcap.com/static/img/coins/32x32/ethereum.png)](0x984dEcf891B30c24F5eB8313918A67d005D3e0B2)
+[![Paypal](https://www.paypalobjects.com/webstatic/icon/favicon.ico)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MUMUF9YPD7S8S)  
