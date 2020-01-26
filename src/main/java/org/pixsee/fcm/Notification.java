@@ -13,6 +13,7 @@ public class Notification {
     private String icon;
     private String tag;
     private String color;
+    private String android_channel_id;
     /*iOS*/
     private String badge;
 
@@ -83,6 +84,10 @@ public class Notification {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public String getAndroidChannelId() { return android_channel_id; }
+
+    public void setAndroidChannelId(String android_channel_id) { this.android_channel_id = android_channel_id; }
 
     public String getBadge() {
         return badge;
